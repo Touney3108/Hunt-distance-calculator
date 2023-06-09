@@ -33,7 +33,7 @@ const calculate = (bulletDistance,hunterSpeed,prevHunterTravel) => {
     const bulletTravel = Math.sqrt(hunterTravel ** 2 + distance ** 2)
     console.log(hunterTravel);
     console.log(prevHunterTravel);
-    if (hunterTravel - prevHunterTravel > .01) {
+    if (hunterTravel - prevHunterTravel > .001) {
         console.log("c")
         return calculate(bulletTravel,hunterSpeed,hunterTravel)
     } else {
@@ -42,14 +42,21 @@ const calculate = (bulletDistance,hunterSpeed,prevHunterTravel) => {
 }
 const triggerCalc = () => {
     
-    if (distance > 0 && bulletSpeed > 0) {
-        const sprint = calculate(distance, hunterSprintSpeed, bulletSpeed);
+    if (distance > 0) {
+        if(bulletSpeed>hunterSprintSpeed)
+        {
+            const sprint = calculate(distance, hunterSprintSpeed, bulletSpeed);
         outputSprintField.innerHTML = "Sprint:" + sprint.hunterTravel.toFixed(2) + "m Character widths:" + (sprint.hunterTravel / characterWidth).toFixed(2) + " Bullet travel:"+sprint.time.toFixed(2)+"s";
-        
-        const run = calculate(distance, hunterRunSpeed, bulletSpeed);
+        }
+        if(bulletSpeed>hunterRunSpeed)
+        {
+            const run = calculate(distance, hunterRunSpeed, bulletSpeed);
         outputRunField.innerHTML = "Run:" + run.hunterTravel.toFixed(2) + "m Character widths:" + (run.hunterTravel / characterWidth).toFixed(2) + " Bullet travel:"+run.time.toFixed(2)+"s";
-        const strafe = calculate(distance, hunterStrafeSpeed, bulletSpeed);
+        }
+        if(bulletSpeed>hunterStrafeSpeed)
+        {
+            const strafe = calculate(distance, hunterStrafeSpeed, bulletSpeed);
         outputStrafeField.innerHTML = "Strafe:" + strafe.hunterTravel.toFixed(2) + "m Character widths:" + (strafe.hunterTravel / characterWidth).toFixed(2) + " Bullet travel:"+strafe.time.toFixed(2)+"s";
-
+}
     }
 }
